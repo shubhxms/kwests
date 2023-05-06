@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   List,
   ListItem,
@@ -11,7 +11,15 @@ import {
 import { MdCheckCircle, MdSettings } from "@chakra-ui/icons";
 import QuestCard from "./QuestCard";
 
+const getQuests = () => {
+  
+}
+
 function TodayList() {
+
+  const quests = [{}]
+
+  
   return (
     <div>
       <List spacing={5}>
@@ -24,7 +32,11 @@ function TodayList() {
         <ListItem>
           <QuestCard id="3" questTitle="title" questType="type" />
         </ListItem>
-        
+        <ListItem>
+          <QuestCard id="3" questTitle="title" questType="type" />
+        </ListItem>        <ListItem>
+          <QuestCard id="3" questTitle="title" questType="type" />
+        </ListItem>        
       </List>
     </div>
   );

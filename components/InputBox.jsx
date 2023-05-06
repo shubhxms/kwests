@@ -4,9 +4,9 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 function InputBox() {
   return (
-    <div className="fixed bottom-10">
+    <div className="fixed bottom-10 w-2/5">
       <InputGroup>
-        <Input placeholder="Basic usage" />
+        <Input placeholder="Basic usage" variant='filled'/>
         <InputRightElement>
           <ArrowForwardIcon/>
         </InputRightElement>

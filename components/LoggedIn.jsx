@@ -3,6 +3,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { SearchIcon, CalendarIcon, ArrowUpDownIcon } from "@chakra-ui/icons";
 import TodayList from "./TodayList";
 import InputBox from "./InputBox";
+import UserPage from "./UserPage";
 
 function LoggedIn() {
   return (
@@ -27,7 +28,7 @@ function LoggedIn() {
             <TodayList />
           </TabPanel>
           <TabPanel>
-            <p>three!</p>
+              <UserPage/>
           </TabPanel>
         </TabPanels>
       </Tabs>
