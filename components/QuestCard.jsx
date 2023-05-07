@@ -49,18 +49,18 @@ function QuestCard(props) {
           <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
             done
           </Button>
-          <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
+          {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
             roll
-          </Button>
-          <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
+          </Button> */}
+          {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
             save
-          </Button>
+          </Button> */}
           <Button colorScheme="messenger" leftIcon={<ArrowRightIcon />}>
             share
           </Button>
-          <Button colorScheme="red" leftIcon={<DeleteIcon />}>
+          {/* <Button colorScheme="red" leftIcon={<DeleteIcon />}>
             delete
-          </Button>
+          </Button> */}
         </ButtonGroup>
 
         <GridItem colSpan={9}>
@@ -69,10 +69,7 @@ function QuestCard(props) {
             {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
 
             <HStack spacing={2}>
-              <Editable defaultValue={questTitle} fontSize={"2xl"}>
-                <EditablePreview />
-                <EditableInput />
-              </Editable>
+              <h3>{questTitle}</h3>
               <Tag
                 size={"sm"}
                 key={"md"}
