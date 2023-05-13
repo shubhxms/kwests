@@ -5,7 +5,7 @@ import TodayList from "./TodayList";
 import InputBox from "./InputBox";
 import UserPage from "./UserPage";
 
-function LoggedIn() {
+function LoggedIn(props) {
   return (
     <div className="w-2/5 no-scrollbar">
       <Tabs isFitted variant="enclosed" isLazy defaultIndex={1}>

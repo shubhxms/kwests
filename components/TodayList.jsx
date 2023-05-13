@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import {
   List,
   ListItem,
@@ -10,50 +10,26 @@ import {
 } from "@chakra-ui/react";
 import { MdCheckCircle, MdSettings } from "@chakra-ui/icons";
 import QuestCard from "./QuestCard";
-
-const getQuests = (setQuests) => {
-  
-  let allQuests = [
-    { key: 1, value: "task one" },
-    { key: 2, value: "task two" },
-    { key: 3, value: "task three" },
-    { key: 4, value: "task four" },
-    { key: 5, value: "task five" },
-  ]
-
-  let quests = []
-  
-  let i = 0
-  while (i < 3) {
-    let selQ = allQuests[Math.floor(Math.random() * allQuests.length)]
-    for (let item in allQuests){
-      if (item = selQ["key"]){
-        selQ = allQuests[Math.floor(Math.random() * allQuests.length)]
-      }
-    }
-    quests.push(selQ)
-    i++
-  }
-
-  setQuests(quests)
-};
+import { useSession, signIn, signOut } from "next-auth/react";
+import { supabaseAuth, supabasePublic } from '../lib/supabaseClient';
 
 
 function TodayList() {
-  const [quests, setQuests] = useState([]);
+  const { data: session, status } = useSession();
+  const [state, setState] = useReducer(
+    (state, newState) => ({...state, ...newState}),
+    {uid: null, quests: null, selectedQuests: null}
+  )
 
-  useEffect(() => {
-    getQuests(setQuests)
-  }, [])
 
 
 
   return (
     <div>
       <List spacing={5}>
-        {quests.map((q) => (
+        {state.quests && state.quests.map((q) => (
           <ListItem>
-            <QuestCard id={q["key"]} questTitle={q["value"]} questType="type" />
+            <QuestCard id={q["key"]} questTitle={q["quest_name"]} questType="type" />
           </ListItem>
         ))}
       </List>

@@ -39,7 +39,7 @@ function QuestCard(props) {
   let { questTitle, questType } = props;
 
   return (
-    <Card className="p-3 pb-3" variant={"filled"} size="sm">
+    <Card className="p-3 pb-3 rounded-full" variant={"filled"} size="sm">
       <Grid templateColumns="repeat(10, 1fr)" gap={3}>
         <ButtonGroup
           orientation="vertical"
@@ -49,9 +49,9 @@ function QuestCard(props) {
           <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
             done
           </Button>
-          {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
+          <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
             roll
-          </Button> */}
+          </Button>
           {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
             save
           </Button> */}
@@ -69,8 +69,8 @@ function QuestCard(props) {
             {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
 
             <HStack spacing={2}>
-              <h3>{questTitle}</h3>
-              <Tag
+              <Heading>{questTitle}</Heading>
+              {/* <Tag
                 size={"sm"}
                 key={"md"}
                 borderRadius="full"
@@ -89,11 +89,11 @@ function QuestCard(props) {
               >
                 <TagLabel>{questType}</TagLabel>
                 <TagCloseButton />
-              </Tag>
+              </Tag> */}
             </HStack>
             {/* </Heading> */}
           </CardHeader>
-
+{/* 
           <CardBody className="pt-0">
             <Stack divider={<StackDivider />} spacing="2">
               <Box>
@@ -105,7 +105,7 @@ function QuestCard(props) {
                 </Text>
               </Box>
             </Stack>
-          </CardBody>
+          </CardBody> */}
         </GridItem>
       </Grid>
     </Card>
