@@ -111,7 +111,7 @@ export default function Home() {
     
       myFunc()
 
-    }, [session])
+    }, [session, status])
 
 
 

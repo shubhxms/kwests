@@ -46,18 +46,18 @@ function QuestCard(props) {
           size="sm"
           className="flex justify-evenly"
         >
-          <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
+          {/* <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
             done
-          </Button>
+          </Button> */}
           {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
             roll
           </Button> */}
           {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
             save
           </Button> */}
-          <Button colorScheme="messenger" leftIcon={<ArrowRightIcon />}>
+          {/* <Button colorScheme="messenger" leftIcon={<ArrowRightIcon />}>
             share
-          </Button>
+          </Button> */}
           {/* <Button colorScheme="red" leftIcon={<DeleteIcon />}>
             delete
           </Button> */}

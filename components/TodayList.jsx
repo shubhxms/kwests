@@ -20,10 +20,9 @@ function TodayList(props) {
       <List spacing={5}>
         {props.liveQuests &&
           props.liveQuests.map((q) => (
-            <ListItem>
+            <ListItem  key={q["key"]}>
               <QuestCard
                 id={q["key"]}
-                key={q["key"]}
                 questTitle={q["quest_name"]}
                 questType="type"
               />
