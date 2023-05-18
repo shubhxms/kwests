@@ -49,9 +49,9 @@ function QuestCard(props) {
           <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
             done
           </Button>
-          <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
+          {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
             roll
-          </Button>
+          </Button> */}
           {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
             save
           </Button> */}

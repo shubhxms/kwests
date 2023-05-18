@@ -25,10 +25,10 @@ function LoggedIn(props) {
             <p>one!</p>
           </TabPanel>
           <TabPanel>
-            <TodayList />
+            <TodayList liveQuests={props.liveQuests}/>
           </TabPanel>
           <TabPanel>
-              <UserPage/>
+              <UserPage allQuests={props.allQuests} id={props.id} retrieveQuests={props.retrieveQuests}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

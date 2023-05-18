@@ -36,7 +36,7 @@ const NavLink = () => (
   </Link>
 );
 
-function Header() {
+function Header(props) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: session, status } = useSession();
@@ -66,7 +66,7 @@ function Header() {
                 >
                   <Avatar
                     size={"sm"}
-                    src={"https://avatars.dicebear.com/api/male/username.svg"}
+                    src={props.image}
                   />
                 </MenuButton>
                 <MenuList alignItems={"center"}>
@@ -74,16 +74,16 @@ function Header() {
                   <Center>
                     <Avatar
                       size={"2xl"}
-                      src={"https://avatars.dicebear.com/api/male/username.svg"}
+                      src={props.image}
                     />
                   </Center>
                   <br />
                   <Center>
-                    <p>Username</p>
+                    <p>{props.name}</p>
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Account Settings</MenuItem>
+                  {/* <MenuItem>Account Settings</MenuItem> */}
                   <MenuItem>
                     {status !== "authenticated" && (
                       <Button onClick={() => signIn()}>login</Button>

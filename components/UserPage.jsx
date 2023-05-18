@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     List,
     ListItem,
@@ -17,43 +17,54 @@ import {
 
 import { CheckIcon, DeleteIcon, EditIcon, CloseIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 
+import { createQuests, updateQuests, deleteQuests } from '@/lib/questsCRUD'
+import EditableQuest from './EditableQuest'
 
-const handleFormEnter = (items, setItems, newQ, setNewQ) => {
-    console.log(newQ)
-    let newItems = [...items]
-    newItems.push({key: [Object.keys(items).length + 1], value: newQ})
-    setItems(newItems)
-    setNewQ('')
+
+const handleFormEnter = (newText, setNewText, id, allQ, setAllQ) => {
+    console.log(newText)
+    let newQ ={user_id: id, quest_name: newText}
+    try {
+        createQuests(newQ)
+    } catch (error) {
+        console.log(error)
+    }
+    // let newAllQ = []
+    // for (let item of allQ){
+    //      newAllQ.push(item)
+    // }
+    // newAllQ.push(newText)
+    setAllQ([...allQ, newQ])
+    setNewText('')
 }
 
-
+const handleEditSubmit = (value, user_id, quest_id) => {
+    updateQuests(user_id, quest_id, newQ);
+}
 
 
 
 function UserPage(props) {
 
-    const [items, setItems] = useState([
-        {key: 1, value: "task one"},
-        {key: 2, value: "task two"},
-        {key: 3, value: "task three"}
-    ])
-    const [newQ, setNewQ] = useState('')
+    const [newText, setNewText] = useState('')
+    const [allQ, setAllQ] = useState(props.allQuests)
+
+
+
 
     return (
         <div>
             <List spacing={3}>
 
             {
-                items.map(i =>
-                    (
-                        <ListItem key={i['key']}>
-                            <ListIcon as={ArrowForwardIcon} color='green.500' />
-                            <Editable defaultValue={i['value']}>
-                                <EditablePreview />
-                                <EditableTextarea />
-                            </Editable>
-                        </ListItem>
-                    ))
+                
+                allQ?.map(q =>
+                    <>
+                    <EditableQuest questId={q['quest_id']} questName={q["quest_name"]} userId={props.id} live={q["live"]} allQuests={allQ} retrieveQuests={props.retrieveQuests}/>
+                    {/* <IconButton icon={<DeleteIcon />} variant='ghost' onDoubleClick={() => handleDelete(props.userId, props.questId, props.live, props.allQuests, toast)}/> */}
+                    </>
+                    
+                    )
             }
 
             </List>
@@ -61,11 +72,11 @@ function UserPage(props) {
             <div className="fixed bottom-10 w-2/5">
                 <form onSubmit={e => {
                     e.preventDefault()
-                    handleFormEnter(items, setItems, newQ, setNewQ)}}>
+                    handleFormEnter(newText, setNewText, props.id, allQ, setAllQ)}}>
                     <FormControl>
                         <InputGroup>
-                            <Input placeholder="Basic usage" variant='filled' onChange={e => setNewQ(e?.target?.value)} value={newQ} />
-                            <InputRightElement onClick={() => handleFormEnter(items, setItems, newQ, setNewQ)}>
+                            <Input placeholder="Basic usage" variant='filled' onChange={e => setNewText(e?.target?.value)} value={newText} />
+                            <InputRightElement onClick={() => handleFormEnter( newText, setNewText, props.id, allQ, setAllQ)}>
                                 <ArrowForwardIcon />
                             </InputRightElement>
                         </InputGroup>
