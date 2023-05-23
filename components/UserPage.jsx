@@ -17,7 +17,8 @@ import {
   Flex,
   ButtonGroup,
   IconButton,
-  Tooltip
+  Tooltip,
+  Heading,
 } from "@chakra-ui/react";
 
 import {
@@ -31,12 +32,17 @@ import {
 import { createQuests, updateQuests, deleteQuests } from "@/lib/questsCRUD";
 import EditableQuest from "./EditableQuest";
 
-const handleFormEnter = async (newText, setNewText, id, createQuestsCallback) => {
+const handleFormEnter = async (
+  newText,
+  setNewText,
+  id,
+  createQuestsCallback
+) => {
   console.log(newText);
   let newQ = { user_id: id, quest_name: newText };
   try {
     // createQuests(newQ);
-    await createQuestsCallback(id, newQ)
+    await createQuestsCallback(id, newQ);
   } catch (error) {
     console.log(error);
   }
@@ -45,7 +51,7 @@ const handleFormEnter = async (newText, setNewText, id, createQuestsCallback) =>
   //      newAllQ.push(item)
   // }
   // newAllQ.push(newText)
-//   setAllQ([...allQ, newQ]);
+  //   setAllQ([...allQ, newQ]);
   setNewText("");
 };
 
@@ -59,10 +65,11 @@ function UserPage(props) {
   return (
     <div>
       <List spacing={3}>
-        {props.allQuests?.map((q) => (
-          <>
+        <Heading className="text-center">all kwests</Heading>
+
+        {props.allQuests?.map((q) => (!q.live && 
+          <div key={q["quest_id"]} className="mx-auto">
             <EditableQuest
-              key={q["quest_id"]}
               questId={q["quest_id"]}
               questName={q["quest_name"]}
               userId={props.id}
@@ -70,16 +77,20 @@ function UserPage(props) {
               deleteQuestsCallBack={props.deleteQuestsCallBack}
               updateQuestsCallback={props.updateQuestsCallback}
             />
-            {/* <IconButton icon={<DeleteIcon />} variant='ghost' onDoubleClick={() => handleDelete(props.userId, props.questId, props.live, props.allQuests, toast)}/> */}
-          </>
+          </div>
         ))}
       </List>
 
-      <div className="fixed bottom-10 w-2/5">
+      <div className="fixed bottom-10 w-2/5 opacity-100">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleFormEnter(newText, setNewText, props.id, props.createQuestsCallback);
+            handleFormEnter(
+              newText,
+              setNewText,
+              props.id,
+              props.createQuestsCallback
+            );
           }}
         >
           <FormControl>
@@ -89,10 +100,16 @@ function UserPage(props) {
                 variant="filled"
                 onChange={(e) => setNewText(e?.target?.value)}
                 value={newText}
+                className=" opacity-100"
               />
               <InputRightElement
                 onClick={() =>
-                  handleFormEnter(newText, setNewText, props.id, props.createQuestsCallback)
+                  handleFormEnter(
+                    newText,
+                    setNewText,
+                    props.id,
+                    props.createQuestsCallback
+                  )
                 }
               >
                 <ArrowForwardIcon />

@@ -5,6 +5,7 @@ import {
   Flex,
   Avatar,
   Link,
+  ButtonGroup,
   Button,
   Menu,
   MenuButton,
@@ -17,7 +18,7 @@ import {
   useColorMode,
   Center,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, PlusSquareIcon, QuestionIcon } from "@chakra-ui/icons";
 import { Inter, Vollkorn } from "next/font/google";
 const vollkorn = Vollkorn({ subsets: ["latin"], weight: '800' });
 
@@ -49,17 +50,26 @@ function Header(props) {
         px={4}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <ButtonGroup>
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
+          <Button onClick={toggleColorMode}>
+            <QuestionIcon />
+          </Button>
+          </ButtonGroup>
+         
           <Box>kwests</Box>
 
+          <ButtonGroup>
+            <Button>
+              <PlusSquareIcon/>
+            </Button>
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <Menu>
                 <MenuButton
                   as={Button}
-                  rounded={"full"}
                   variant={"link"}
                   cursor={"pointer"}
                   minW={0}
@@ -96,6 +106,8 @@ function Header(props) {
               </Menu>
             </Stack>
           </Flex>
+          </ButtonGroup>
+         
         </Flex>
       </Box>
     </div>

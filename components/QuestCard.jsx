@@ -39,37 +39,45 @@ function QuestCard(props) {
   let { questTitle, questType } = props;
 
   return (
-    <Card className="p-3 pb-3 rounded-full" variant={"filled"} size="sm">
-      <Grid templateColumns="repeat(10, 1fr)" gap={3}>
-        <ButtonGroup
+    <Card
+      className="p-3 pb-3 rounded-full w-3/5 mx-auto"
+      variant={"filled"}
+      size="sm"
+    >
+      <Grid>
+        {/* <ButtonGroup
           orientation="vertical"
           size="sm"
           className="flex justify-evenly"
-        >
-          {/* <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
+          columnSpan={0.5}
+        > */}
+        {/* <Button colorScheme="whatsapp" leftIcon={<CheckIcon />}>
             done
           </Button> */}
-          {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
+        {/* <Button colorScheme="facebook" leftIcon={<RepeatIcon />}>
             roll
           </Button> */}
-          {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
+        {/* <Button colorScheme="linkedin" leftIcon={<EditIcon />} isDisabled>
             save
           </Button> */}
-          {/* <Button colorScheme="messenger" leftIcon={<ArrowRightIcon />}>
+        {/* <Button colorScheme="messenger" leftIcon={<ArrowRightIcon />}>
             share
           </Button> */}
-          {/* <Button colorScheme="red" leftIcon={<DeleteIcon />}>
+        {/* <Button colorScheme="red" leftIcon={<DeleteIcon />}>
             delete
           </Button> */}
-        </ButtonGroup>
+        {/* </ButtonGroup> */}
 
-        <GridItem colSpan={9}>
+        <GridItem>
           <CardHeader className="pt-0">
             {/* <Heading size="md" className="p-0"> */}
             {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
 
             <HStack spacing={2}>
-              <Heading>{questTitle}</Heading>
+              {/* <Heading size="md" className="text-center">{questTitle}</Heading> */}
+              <div className="mx-auto">
+                <p>{questTitle}</p>
+              </div>
               {/* <Tag
                 size={"sm"}
                 key={"md"}
@@ -93,7 +101,7 @@ function QuestCard(props) {
             </HStack>
             {/* </Heading> */}
           </CardHeader>
-{/* 
+          {/* 
           <CardBody className="pt-0">
             <Stack divider={<StackDivider />} spacing="2">
               <Box>

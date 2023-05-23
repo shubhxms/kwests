@@ -18,7 +18,7 @@ import {
   ButtonGroup,
   IconButton,
   useToast,
-  Tooltip
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -30,46 +30,74 @@ import {
 import { updateQuests, deleteQuests } from "@/lib/questsCRUD";
 import { supabasePublic } from "@/lib/supabaseClient";
 
-const handleSubmit = async (id, questId, newQuestName, updateQuestsCallback) => {
+const handleSubmit = async (
+  id,
+  questId,
+  newQuestName,
+  updateQuestsCallback
+) => {
   console.log(newQuestName);
-  await updateQuestsCallback(id, questId, { quest_name: newQuestName })
+  await updateQuestsCallback(id, questId, { quest_name: newQuestName });
 };
 
 const handleDelete = async (id, questId, live, deleteQuestsCallBack) => {
-
-    if (live) {
-      console.log("cannot delete live quests!")
-    } else {
-        await deleteQuestsCallBack(id, questId)
-    }
-
-}
-
+  if (live) {
+    console.log("cannot delete live quests!");
+  } else {
+    await deleteQuestsCallBack(id, questId);
+  }
+};
 
 function EditableQuest(props) {
   return (
-    <div>
+    <div className="w-3/5 mx-auto">
       <ListItem key={props.questId}>
-      <Tooltip label='Click to edit!' bg='gray.300' color='black' placement='top-start'>
-
         <Editable
           defaultValue={props.questName}
-          onSubmit={(value) => handleSubmit(props.userId, props.questId, value, props.updateQuestsCallback)}
+          onSubmit={(value) =>
+            handleSubmit(
+              props.userId,
+              props.questId,
+              value,
+              props.updateQuestsCallback
+            )
+          }
         >
           <ListIcon
             as={ArrowForwardIcon}
             color="green.500"
             style={{ display: "inline-block" }}
           />
-          <EditablePreview />
-          <EditableTextarea />
-          <Tooltip label='Be careful!' bg='red.300' color='black' placement='top-start'>
-          <IconButton icon={<DeleteIcon />} variant='ghost' onClick={() => handleDelete(props.userId, props.questId, props.live, props.deleteQuestsCallBack)}/>
+          <Tooltip
+            label="Be careful!"
+            bg="red.300"
+            color="black"
+            placement="top-start"
+          >
+            <IconButton
+              icon={<DeleteIcon />}
+              variant="ghost"
+              onClick={() =>
+                handleDelete(
+                  props.userId,
+                  props.questId,
+                  props.live,
+                  props.deleteQuestsCallBack
+                )
+              }
+            />
           </Tooltip>
-          
-        </Editable>
-        </Tooltip>
+          <Tooltip
+            label="Click to edit!"
+            bg="gray.300"
+            color="black"
+            placement="top-start"
+          >
+            <EditablePreview />
+          </Tooltip>
 
+          <EditableInput />
+        </Editable>
       </ListItem>
     </div>
   );

@@ -8,26 +8,11 @@ import UserPage from "./UserPage";
 function LoggedIn(props) {
   return (
     <div className="w-2/5 no-scrollbar">
-      <Tabs isFitted variant="enclosed" isLazy defaultIndex={1}>
-        <TabList>
-          <Tab>
-            <SearchIcon />
-          </Tab>
-          <Tab>
-            <CalendarIcon />
-          </Tab>
-          <Tab>
-            <ArrowUpDownIcon />
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <p>one!</p>
-          </TabPanel>
-          <TabPanel>
+
+
             <TodayList liveQuests={props.liveQuests} />
-          </TabPanel>
-          <TabPanel>
+<br/>
+<hr/>
             <UserPage
               allQuests={props.allQuests}
               id={props.id}
@@ -35,9 +20,7 @@ function LoggedIn(props) {
               updateQuestsCallback={props.updateQuestsCallback}
               createQuestsCallback={props.createQuestsCallback}
             />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+
     </div>
   );
 }
