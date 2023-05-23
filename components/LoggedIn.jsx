@@ -25,10 +25,16 @@ function LoggedIn(props) {
             <p>one!</p>
           </TabPanel>
           <TabPanel>
-            <TodayList liveQuests={props.liveQuests}/>
+            <TodayList liveQuests={props.liveQuests} />
           </TabPanel>
           <TabPanel>
-              <UserPage allQuests={props.allQuests} id={props.id} retrieveQuests={props.retrieveQuests}/>
+            <UserPage
+              allQuests={props.allQuests}
+              id={props.id}
+              deleteQuestsCallBack={props.deleteQuestsCallBack}
+              updateQuestsCallback={props.updateQuestsCallback}
+              createQuestsCallback={props.createQuestsCallback}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

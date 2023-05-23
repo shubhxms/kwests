@@ -17,7 +17,8 @@ import {
   Flex,
   ButtonGroup,
   IconButton,
-  useToast
+  useToast,
+  Tooltip
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -29,85 +30,31 @@ import {
 import { updateQuests, deleteQuests } from "@/lib/questsCRUD";
 import { supabasePublic } from "@/lib/supabaseClient";
 
-const handleSubmit = (id, questId, newQuestName) => {
+const handleSubmit = async (id, questId, newQuestName, updateQuestsCallback) => {
   console.log(newQuestName);
-  let res = updateQuests(id, questId, { quest_name: newQuestName });
-  console.log(res);
+  await updateQuestsCallback(id, questId, { quest_name: newQuestName })
 };
 
-const handleDelete = async (id, questId, live, allQuests, toast, retrieveQuests) => {
+const handleDelete = async (id, questId, live, deleteQuestsCallBack) => {
 
-    if (live){
-    // let liveQuests
-    //     try {
-    //         liveQuests = await getRandomQuests(3, allQuests);
-    //         console.log(liveQuests);
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    
-    //       for (let quest of allQuests) {
-    //         try {
-    //           const { data, error } = await supabasePublic
-    //             .from("quests")
-    //             .update({ live: "FALSE" })
-    //             .eq("quest_id", quest["quest_id"]);
-    //           if (error) {
-    //             console.log(error);
-    //           }
-    //         } catch (error) {
-    //           console.log(error);
-    //         }
-    //       }
-    
-    //       for (let quest of liveQuests) {
-    //         try {
-    //           const { data, error } = await supabasePublic
-    //             .from("quests")
-    //             .update({ live: "TRUE" })
-    //             .eq("quest_id", quest["quest_id"]);
-    //           if (error) {
-    //             console.log(error);
-    //           }
-    //         } catch (error) {
-    //           console.log(error);
-    //         }
-    //       }
-    
-    //       try {
-    //         const { data, error } = await supabaseAuth
-    //           .from("users")
-    //           .update({ last_updated: new Date().toISOString().split("T")[0] })
-    //           .eq("id", userData.id);
-    //         if (error) {
-    //           console.log(error);
-    //         }
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    // toast({
-    //     title: 'Cannot delete live quest!',
-    //     description: "wait for next roll! :).",
-    //     status: 'failure',
-    //     duration: 9000,
-    //     isClosable: true,
-    //   })
-
-    }else{
-        deleteQuests(id, questId)
-        // retrieveQuests()
+    if (live) {
+      console.log("cannot delete live quests!")
+    } else {
+        await deleteQuestsCallBack(id, questId)
     }
+
 }
 
 
 function EditableQuest(props) {
-    const toast = useToast()
   return (
     <div>
       <ListItem key={props.questId}>
+      <Tooltip label='Click to edit!' bg='gray.300' color='black' placement='top-start'>
+
         <Editable
           defaultValue={props.questName}
-          onSubmit={(value) => handleSubmit(props.userId, props.questId, value)}
+          onSubmit={(value) => handleSubmit(props.userId, props.questId, value, props.updateQuestsCallback)}
         >
           <ListIcon
             as={ArrowForwardIcon}
@@ -116,9 +63,13 @@ function EditableQuest(props) {
           />
           <EditablePreview />
           <EditableTextarea />
-          <IconButton icon={<DeleteIcon />} variant='ghost' onDoubleClick={() => handleDelete(props.userId, props.questId, props.live, props.allQuests, toast, props.retrieveQuests)}/>
+          <Tooltip label='Be careful!' bg='red.300' color='black' placement='top-start'>
+          <IconButton icon={<DeleteIcon />} variant='ghost' onClick={() => handleDelete(props.userId, props.questId, props.live, props.deleteQuestsCallBack)}/>
+          </Tooltip>
           
         </Editable>
+        </Tooltip>
+
       </ListItem>
     </div>
   );

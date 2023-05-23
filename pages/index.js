@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from "next/image";
 import { Inter, Vollkorn } from "next/font/google";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -16,18 +16,77 @@ const vollkorn = Vollkorn({ subsets: ["latin"], weight: "800" });
 
 
 
+
+
 export default function Home() {
   const { data: session, status } = useSession();
   const [userData, setUserData] = useState();
   const [allQuests, setAllQuests] = useState();
   const [liveQuests, setLiveQuests] = useState();
 
+  const getLiveQuests =
+    async (userData) => {
+      console.log("iyya")
+      let liveQuests;
+
+      if (
+        (new Date().toISOString().split("T")[0] - userData.last_updated) /
+        (1000 * 60 * 60) >
+        24
+      ) {
+        try {
+          liveQuests = await getRandomQuests(3, allQuests);
+
+          console.log(liveQuests);
+          setLiveQuests(liveQuests);
+        } catch (error) {
+          console.log(error);
+        }
+
+        for (let quest of allQuests) {
+          try {
+            const { data, error } = await supabasePublic
+              .from("quests")
+              .update({ live: "FALSE" })
+              .eq("quest_id", quest["quest_id"]);
+            if (error) {
+              console.log(error);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
+        for (let quest of liveQuests) {
+          try {
+            const { data, error } = await supabasePublic
+              .from("quests")
+              .update({ live: "TRUE" })
+              .eq("quest_id", quest["quest_id"]);
+            if (error) {
+              console.log(error);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } else {
+        liveQuests = allQuests.filter(q => q.live)
+        setLiveQuests(liveQuests)
+      }
+
+    }
+
   useEffect(() => {
+
     let myFunc = async () => {
-      if (status === "authenticated" && !userData) {
+      console.log("idharrrr")
+      if (status === "authenticated") {
         console.log("here");
+
         let userData, allQuests, liveQuests;
-    
+
+        // fetch user data
         try {
           userData = await fetchData(session);
           userData = userData[0];
@@ -36,7 +95,8 @@ export default function Home() {
         } catch (error) {
           console.log(error);
         }
-    
+
+        // fetch all quests
         try {
           allQuests = await retrieveQuests(userData.id);
           console.log(allQuests);
@@ -44,20 +104,21 @@ export default function Home() {
         } catch (error) {
           console.log(error);
         }
-    
+        // check if live quests are older than 24h, if yes update
         if (
           (new Date().toISOString().split("T")[0] - userData.last_updated) /
-            (1000 * 60 * 60) >
+          (1000 * 60 * 60) >
           24
         ) {
           try {
             liveQuests = await getRandomQuests(3, allQuests);
+
             console.log(liveQuests);
             setLiveQuests(liveQuests);
           } catch (error) {
             console.log(error);
           }
-    
+
           for (let quest of allQuests) {
             try {
               const { data, error } = await supabasePublic
@@ -71,7 +132,7 @@ export default function Home() {
               console.log(error);
             }
           }
-    
+
           for (let quest of liveQuests) {
             try {
               const { data, error } = await supabasePublic
@@ -85,41 +146,42 @@ export default function Home() {
               console.log(error);
             }
           }
-    
-          try {
-            const { data, error } = await supabaseAuth
-              .from("users")
-              .update({ last_updated: new Date().toISOString().split("T")[0] })
-              .eq("id", userData.id);
-            if (error) {
-              console.log(error);
-            }
-          } catch (error) {
-            console.log(error);
-          }
         } else {
-          liveQuests = [];
-          for (let quest of allQuests) {
-            if (quest.live) {
-              liveQuests.push(quest);
-            }
-          }
-          setLiveQuests(liveQuests);
+          liveQuests = allQuests.filter(q => q.live)
+          setLiveQuests(liveQuests)
         }
+
       }
-    };
-    
-      myFunc()
+    }
+    myFunc()
 
-    }, [session, status])
+  }, [session, status])
 
 
+
+
+  async function deleteQuestsCallBack(id, questId) {
+    await deleteQuests(id, questId)
+    setAllQuests(await retrieveQuests(id))
+  }
+
+  async function updateQuestsCallback(id, questId, newQuest) {
+    await updateQuests(id, questId, newQuest)
+    setAllQuests(await retrieveQuests(id))
+    await getLiveQuests(userData, liveQuests)
+  }
+
+  async function createQuestsCallback(id, quest){
+    await createQuests(quest)
+    setAllQuests(await retrieveQuests(id))
+    await getLiveQuests(userData, liveQuests)
+  }
 
 
   return (
     <div>
       <div className="flex flex-col justify-between no-scrollbar">
-        <Header name={userData?.name} image={userData?.image}/>
+        <Header name={userData?.name} image={userData?.image} />
         <main
           className={`flex max-h-screen flex-col items-center justify-between ${vollkorn.className} no-scrollbar`}
         >
@@ -128,7 +190,9 @@ export default function Home() {
               liveQuests={liveQuests}
               allQuests={allQuests}
               id={userData.id}
-              retrieveQuests={retrieveQuests}
+              deleteQuestsCallBack={deleteQuestsCallBack}
+              updateQuestsCallback={updateQuestsCallback}
+              createQuestsCallback={createQuestsCallback}
             />
             : <LoggedOut />}
           {/* <InputBox/> */}

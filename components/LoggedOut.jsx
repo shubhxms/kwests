@@ -7,7 +7,7 @@ function LoggedOut() {
 
   return (
     <>
-        <div>You are logged Out! \nPlease login to continue!</div>
+        <div>You are logged Out!Please login to continue!</div>
         <Button onClick={signIn}>login</Button>
     </>
     
