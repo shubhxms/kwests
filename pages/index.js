@@ -30,9 +30,9 @@ export default function Home() {
       let liveQuests;
 
       if (
-        (new Date().toISOString().split("T")[0] - userData.last_updated) /
+        ((new Date().toISOString().split("T")[0] - userData.last_updated) /
         (1000 * 60 * 60) >
-        24
+        24) || (allQuests.length <= 3)
       ) {
         try {
           liveQuests = await getRandomQuests(3, allQuests);
@@ -106,9 +106,9 @@ export default function Home() {
         }
         // check if live quests are older than 24h, if yes update
         if (
-          (new Date().toISOString().split("T")[0] - userData.last_updated) /
-          (1000 * 60 * 60) >
-          24
+          ((new Date().toISOString().split("T")[0] - userData.last_updated) /
+        (1000 * 60 * 60) >
+        24) || (allQuests.length <= 3)
         ) {
           try {
             liveQuests = await getRandomQuests(3, allQuests);

@@ -39,6 +39,7 @@ const handleFormEnter = async (
   createQuestsCallback
 ) => {
   console.log(newText);
+  if(!newText) return;
   let newQ = { user_id: id, quest_name: newText };
   try {
     // createQuests(newQ);
@@ -93,7 +94,7 @@ function UserPage(props) {
             );
           }}
         >
-          <FormControl>
+          <FormControl isRequired>
             <InputGroup>
               <Input
                 placeholder="New Quest"
