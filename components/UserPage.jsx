@@ -41,7 +41,10 @@ const handleFormEnter = async (
   console.log(newText);
   newText = newText.trim()
   console.log(newText);
-  if(!newText) setNewText(""); return;
+  if(!newText) {
+    setNewText("");
+    return;
+  }
   let newQ = { user_id: id, quest_name: newText };
   try {
     // createQuests(newQ);
