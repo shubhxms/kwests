@@ -32,7 +32,7 @@ export default function Home() {
       if (
         ((new Date().toISOString().split("T")[0] - userData.last_updated) /
         (1000 * 60 * 60) >
-        24) || (allQuests.length <= 3)
+        24) || (allQuests.length <= 4)
       ) {
         try {
           liveQuests = await getRandomQuests(3, allQuests);
@@ -108,7 +108,7 @@ export default function Home() {
         if (
           ((new Date().toISOString().split("T")[0] - userData.last_updated) /
         (1000 * 60 * 60) >
-        24) || (allQuests.length <= 3)
+        24) || (allQuests.length <= 4)
         ) {
           try {
             liveQuests = await getRandomQuests(3, allQuests);
