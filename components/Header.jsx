@@ -45,7 +45,7 @@ function Header(props) {
   return (
     <div className={`grid place-items-center pt-3 pb-2 ${vollkorn.className}`}>
       <Box
-        className={`grid w-2/5 max-h-13`}
+        className={`grid w-2/5 max-h-13 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]`}
         bg={useColorModeValue("gray.100", "gray.900")}
         px={4}
       >

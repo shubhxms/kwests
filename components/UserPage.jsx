@@ -39,7 +39,9 @@ const handleFormEnter = async (
   createQuestsCallback
 ) => {
   console.log(newText);
-  if(!newText) return;
+  newText = newText.trim()
+  console.log(newText);
+  if(!newText) setNewText(""); return;
   let newQ = { user_id: id, quest_name: newText };
   try {
     // createQuests(newQ);
@@ -82,7 +84,7 @@ function UserPage(props) {
         ))}
       </List>
 
-      <div className="fixed bottom-10 w-2/5 opacity-100">
+      <div className="fixed bottom-10 w-2/5 opacity-100 shadow-[5px_5px_0px_0px_rgba(109,40,217)]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
