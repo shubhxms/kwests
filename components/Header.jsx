@@ -12,15 +12,19 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
   Center,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon, PlusSquareIcon, QuestionIcon } from "@chakra-ui/icons";
-import { Inter, Vollkorn } from "next/font/google";
-const vollkorn = Vollkorn({ subsets: ["latin"], weight: '800' });
+import {
+  MoonIcon,
+  SunIcon,
+  PlusSquareIcon,
+  QuestionIcon,
+} from "@chakra-ui/icons";
+import { Vollkorn } from "next/font/google";
+const vollkorn = Vollkorn({ subsets: ["latin"], weight: "800" });
 
 const NavLink = () => (
   <Link
@@ -39,7 +43,6 @@ const NavLink = () => (
 
 function Header(props) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: session, status } = useSession();
 
   return (
@@ -51,63 +54,56 @@ function Header(props) {
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <ButtonGroup>
-          <Button onClick={toggleColorMode}>
-            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
-          <Button onClick={toggleColorMode}>
-            <QuestionIcon />
-          </Button>
+            <Button onClick={toggleColorMode}>
+              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            </Button>
+            <Button onClick={toggleColorMode}>
+              <QuestionIcon />
+            </Button>
           </ButtonGroup>
-         
+
           <Box>kwests</Box>
 
           <ButtonGroup>
             <Button>
-              <PlusSquareIcon/>
+              <PlusSquareIcon />
             </Button>
-          <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                >
-                  <Avatar
-                    size={"sm"}
-                    src={props.image}
-                  />
-                </MenuButton>
-                <MenuList alignItems={"center"}>
-                  <br />
-                  <Center>
-                    <Avatar
-                      size={"2xl"}
-                      src={props.image}
-                    />
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>{props.name}</p>
-                  </Center>
-                  <br />
-                  <MenuDivider />
-                  {/* <MenuItem>Account Settings</MenuItem> */}
-                  <MenuItem>
-                    {status !== "authenticated" && (
-                      <Button onClick={() => signIn()}>login</Button>
-                    )}
-                    {status === "authenticated" && (
-                      <Button onClick={() => signOut()}>logout</Button>
-                    )}
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Stack>
-          </Flex>
+            <Flex alignItems={"center"}>
+              <Stack direction={"row"} spacing={7}>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    <Avatar size={"sm"} src={props.image} />
+                  </MenuButton>
+                  <MenuList alignItems={"center"}>
+                    <br />
+                    <Center>
+                      <Avatar size={"2xl"} src={props.image} />
+                    </Center>
+                    <br />
+                    <Center>
+                      <p>{props.name}</p>
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    {/* <MenuItem>Account Settings</MenuItem> */}
+                    <MenuItem>
+                      {status !== "authenticated" && (
+                        <Button onClick={() => signIn()}>login</Button>
+                      )}
+                      {status === "authenticated" && (
+                        <Button onClick={() => signOut()}>logout</Button>
+                      )}
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Stack>
+            </Flex>
           </ButtonGroup>
-         
         </Flex>
       </Box>
     </div>

@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import Image from "next/image";
-import { Inter, Vollkorn } from "next/font/google";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { Button } from "@chakra-ui/react";
+import { Vollkorn } from "next/font/google";
+import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
-import TodayList from "@/components/TodayList";
 import LoggedIn from "@/components/LoggedIn";
-import { supabaseAuth, supabasePublic } from './../lib/supabaseClient';
+import { supabasePublic } from './../lib/supabaseClient';
 import LoggedOut from '@/components/LoggedOut';
 import fetchData from '@/lib/fetchData';
 import { createQuests, retrieveQuests, updateQuests, deleteQuests } from '@/lib/questsCRUD'

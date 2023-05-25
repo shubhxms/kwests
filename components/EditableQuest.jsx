@@ -1,34 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  List,
   ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-  InputGroup,
-  Input,
-  InputRightElement,
-  FormControl,
   Editable,
   EditableInput,
-  EditableTextarea,
   EditablePreview,
-  useEditableControls,
-  Flex,
-  ButtonGroup,
   IconButton,
-  useToast,
   Tooltip,
 } from "@chakra-ui/react";
-import {
-  CheckIcon,
-  DeleteIcon,
-  EditIcon,
-  CloseIcon,
-  ArrowForwardIcon,
-} from "@chakra-ui/icons";
-import { updateQuests, deleteQuests } from "@/lib/questsCRUD";
-import { supabasePublic } from "@/lib/supabaseClient";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const handleSubmit = async (
   id,
