@@ -68,7 +68,7 @@ export default function Home() {
           }
         }
 
-        updateLastUpdated(session, new Date().toISOString().split("T")[0])
+        await updateLastUpdated(session, new Date().toISOString().split("T")[0])
 
       } else {
         liveQuests = allQuests.filter(q => q.live)
@@ -147,7 +147,7 @@ export default function Home() {
             }
           }
 
-          updateLastUpdated(session, new Date().toISOString().split("T")[0])
+          await updateLastUpdated(session, new Date().toISOString().split("T")[0])
 
         } else {
           liveQuests = allQuests.filter(q => q.live)
