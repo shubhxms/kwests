@@ -33,12 +33,13 @@ export default function Home() {
       ) {
         try {
           liveQuests = await getRandomQuests(3, allQuests);
-
           console.log(liveQuests);
-          setLiveQuests(liveQuests);
+          
         } catch (error) {
           console.log(error);
         }
+
+        console.log("dfdsfds");
 
         for (let quest of allQuests) {
           try {
@@ -68,7 +69,15 @@ export default function Home() {
           }
         }
 
-        await updateLastUpdated(session, new Date().toISOString().split("T")[0])
+        console.log("teststst");
+
+        try {
+          console.log("aaaooo");
+          await updateLastUpdated(session, new Date().toISOString().split("T")[0])
+          setLiveQuests(liveQuests);
+        } catch (error) {
+          console.log(error);
+        }
 
       } else {
         liveQuests = allQuests.filter(q => q.live)
@@ -147,7 +156,14 @@ export default function Home() {
             }
           }
 
-          await updateLastUpdated(session, new Date().toISOString().split("T")[0])
+          try {
+            console.log("Aaooo");
+            await updateLastUpdated(session, new Date().toISOString().split("T")[0])
+          } catch (error) {
+            console.log(error);
+          }
+
+          
 
         } else {
           liveQuests = allQuests.filter(q => q.live)
