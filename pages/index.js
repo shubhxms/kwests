@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import LoggedIn from "@/components/LoggedIn";
 import { supabasePublic } from './../lib/supabaseClient';
 import LoggedOut from '@/components/LoggedOut';
-import fetchData from '@/lib/fetchData';
+import {fetchData, updateLastUpdated} from '@/lib/fetchData';
 import { createQuests, retrieveQuests, updateQuests, deleteQuests } from '@/lib/questsCRUD'
 import getRandomQuests from '@/lib/randomQuests';
 
@@ -67,6 +67,9 @@ export default function Home() {
             console.log(error);
           }
         }
+
+        updateLastUpdated()
+
       } else {
         liveQuests = allQuests.filter(q => q.live)
         setLiveQuests(liveQuests)
@@ -103,9 +106,9 @@ export default function Home() {
         }
         // check if live quests are older than 24h, if yes update
         if (
-          ((new Date().toISOString().split("T")[0] - userData.last_updated) /
-        (1000 * 60 * 60) >
-        24) || (allQuests.length <= 4)
+          ((new Date(new Date().toISOString().split("T")[0]) - new Date(userData.last_updated)) /
+          (1000 * 60 * 60) >
+          24) || (allQuests.length <= 4)
         ) {
           try {
             liveQuests = await getRandomQuests(3, allQuests);
@@ -143,6 +146,9 @@ export default function Home() {
               console.log(error);
             }
           }
+
+          updateLastUpdated()
+
         } else {
           liveQuests = allQuests.filter(q => q.live)
           setLiveQuests(liveQuests)
