@@ -27,7 +27,7 @@ export default function Home() {
       let liveQuests;
 
       if (
-        ((new Date().toISOString().split("T")[0] - userData.last_updated) /
+        ((new Date(new Date().toISOString().split("T")[0]) - new Date(userData.last_updated)) /
         (1000 * 60 * 60) >
         24) || (allQuests.length <= 4)
       ) {
